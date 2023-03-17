@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_state_management/screen/home_screen.dart';
 
 void main() {
   runApp(
-      MaterialApp(
+      ProviderScope(child: MaterialApp(
         home: HomeScreen(),
-      )
+      ))
   );
 }
