@@ -37,6 +37,15 @@ class StateProviderScreen extends ConsumerWidget {
               ),
               ElevatedButton(
                   onPressed: () {
+                    ref.read(numberProvider.notifier).state = // state를 이용해서 값을 불러올 수 있음
+                    ref.read(numberProvider.notifier).state - 1;
+                  },
+                  child: Text(
+                      'down'
+                  )
+              ),
+              ElevatedButton(
+                  onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (_) => _NextScreen())
@@ -59,6 +68,7 @@ class _NextScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // watch는 변수로 사용하는 경우가 대부분
     final provider = ref.watch(numberProvider); // ref.watch : 특정 provider를 바라보고 있다가 변경이 되면 build를 다시 실행
 
     return DefaultLayout(
@@ -69,18 +79,19 @@ class _NextScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                provider.toString(),
+                provider.toString(), // 변수로 사용하기 때문에 UI에 바로 넣을 수 있음
               ),
               ElevatedButton(
                   onPressed: () {
                     // state: 지금 현재 상태
                     // 현재 0
-                    ref.read(numberProvider.notifier).update((state) => state + 1); // 버튼을 눌렀을 때 실행되는 경우 read
+                    // 값을 바꾸고 싶으면 .notifier를 붙이기
+                    ref.read(numberProvider.notifier).update((state) => state + 1); // 버튼을 눌렀을 때 실행되는 경우 read // update함수를 통해 update를 할 수 있음
                   },
                   child: Text(
                       'up'
                   )
-              )
+              ),
             ],
           ),
         )
