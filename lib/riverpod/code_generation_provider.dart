@@ -17,5 +17,23 @@ String gState(GStateRef ref) {
   return 'Hello Colde Generation';
 }
 
+/// 일반적으로 riverpod 어노테이션을 사용하면 AutoDispose(캐시 저장x)로 만들어 짐
+@riverpod
+Future<int> gStateFuture(GStateFutureRef ref) async {
+  await Future.delayed(Duration(seconds: 3));
 
+  return 10;
+}
+
+// AutoDispose를 사용하고 싶지 않다면
+@Riverpod(
+  // 값을 살려두어라
+  /// AutoDispose가 아닌 provider가 사용됨
+  keepAlive: true, // 기본값 false
+)
+Future<int> gStateFuture2(GStateFuture2Ref ref) async {
+  await Future.delayed(Duration(seconds: 3));
+
+  return 10;
+}
 // 2) Parameter > Family 파라미터를 일반 함수처럼 사용할 수 있도록
