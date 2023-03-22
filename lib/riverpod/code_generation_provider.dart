@@ -36,4 +36,32 @@ Future<int> gStateFuture2(GStateFuture2Ref ref) async {
 
   return 10;
 }
+
+
 // 2) Parameter > Family 파라미터를 일반 함수처럼 사용할 수 있도록
+class Parameter{
+  final int number1;
+  final int number2;
+
+  Parameter({
+    required this.number1,
+    required this.number2,
+  });
+}
+
+
+final _testFamilyProvider = Provider.family<int, Parameter>(
+   (ref, parameter) => parameter.number1 * parameter.number2,
+);
+
+// number1과 number2를 provider에 전달하고자 한 것인데
+// 기존 방식 (위)는 코드가 많아짐
+// 이를 해결하기 위해 generation에서 아래처럼 사용 -> 매우 간편해짐
+@riverpod
+int gStateMultiply(GStateMultiplyRef ref, {
+  // class를 선언할 필요 없음
+  required int number1,
+  required int number2,
+}) {
+  return number1 * number2;
+}

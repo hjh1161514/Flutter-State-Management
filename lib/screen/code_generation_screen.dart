@@ -11,6 +11,10 @@ class CodeGenerationScreen extends ConsumerWidget {
     final state1 = ref.watch(gStateProvider);
     final state2 = ref.watch(gStateFutureProvider);
     final state3 = ref.watch(gStateFuture2Provider);
+    final state4 = ref.watch(gStateMultiplyProvider(
+      number1: 10,
+      number2: 20,
+    ));
 
     return DefaultLayout(
         title: 'CodeGenerationScreen',
@@ -40,7 +44,8 @@ class CodeGenerationScreen extends ConsumerWidget {
                 err.toString(),
               ),
               loading: () => Center(child: CircularProgressIndicator()), // loading이 되고 있을 떄 실행되는 함수
-            )
+            ),
+            Text('State4 $state4'),
           ],
         )
     );
