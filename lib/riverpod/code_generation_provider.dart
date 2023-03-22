@@ -65,3 +65,21 @@ int gStateMultiply(GStateMultiplyRef ref, {
 }) {
   return number1 * number2;
 }
+
+// StateNotifierProvider
+@riverpod
+class GStateNotifier extends _$GStateNotifier{
+  // 차이점) build 함수 내에서 초기값을 지정
+  @override
+  int build() {
+    return 0;
+  }
+
+  increment() {
+    state ++;
+  }
+
+  decrement() {
+    state --;
+  }
+}
