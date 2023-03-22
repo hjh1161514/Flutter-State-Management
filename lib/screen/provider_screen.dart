@@ -13,8 +13,6 @@ class ProviderScreen extends ConsumerWidget {
     // filteredShoppingListProvider는 provider인데 안에서 shoppingListProvider를 또 watch
     final state = ref.watch(filteredShoppingListProvider); // 위의 기능을 하는 provider를 watch
 
-    print(state);
-
     return DefaultLayout(
         title: 'ProviderScreen',
         actions: [
