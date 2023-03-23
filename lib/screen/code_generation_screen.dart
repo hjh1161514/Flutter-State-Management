@@ -8,6 +8,8 @@ class CodeGenerationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('build');
+
     final state1 = ref.watch(gStateProvider);
     final state2 = ref.watch(gStateFutureProvider);
     final state3 = ref.watch(gStateFuture2Provider);
@@ -15,7 +17,7 @@ class CodeGenerationScreen extends ConsumerWidget {
       number1: 10,
       number2: 20,
     ));
-    final state5 = ref.watch(gStateNotifierProvider);
+    // final state5 = ref.watch(gStateNotifierProvider);
 
     return DefaultLayout(
         title: 'CodeGenerationScreen',
@@ -47,7 +49,20 @@ class CodeGenerationScreen extends ConsumerWidget {
               loading: () => Center(child: CircularProgressIndicator()), // loading이 되고 있을 떄 실행되는 함수
             ),
             Text('State4 $state4'),
-            Text('State5 $state5'),
+            // Text('State5 $state5'),
+            // _StateFiveWidget(),
+            Consumer( // 부분적 렌더링 가능
+                builder: (context, ref, child) {
+                  final state5 = ref.watch(gStateNotifierProvider);
+                  return Row(
+                    children: [
+                      Text('State5 $state5'),
+                      child!, // child에 들어가는 건 다시 build를 하지 않음
+                    ],
+                  );
+                },
+                child: Text('hello'), // consumer 위젯의 child 파라미터에 제공됨
+            ),
             Row(
               children: [
                 ElevatedButton(
@@ -78,3 +93,17 @@ class CodeGenerationScreen extends ConsumerWidget {
     );
   }
 }
+
+// increment, decrement를 진행하면 전체 state가 다시 build
+// statew5만 다시 build하고 싶기 떄문에 새로운 widget으로 분리해야 함
+/// 이것 또한 번거로움 => Consumer 위젯 제공
+class _StateFiveWidget extends ConsumerWidget {
+  const _StateFiveWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state5 = ref.watch(gStateNotifierProvider);
+    return Text('State5 $state5');
+  }
+}
+
